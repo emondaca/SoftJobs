@@ -56,12 +56,14 @@ const register = async (req, res) => {
 const traerUsuario = async (req, res, next) => {
     const user_id = req.user.user_id;
     try {
-        const user = await userModel.getUser(user_id);
+        const usuario = await userModel.getUser(user_id);
+        const user= {id: usuario.id, rol: usuario.rol, lenguage: usuario.lenguage };
         console.log(user);
-        if (!user) {
+        if (!usuario) {
         return res.status(400).json({ message: "User not found" });
         } 
-        return res.json( {data: user} );
+        console.log(res);
+        return res.send({ data : [user] });
         
     } catch (error) {
         console.log(error);
